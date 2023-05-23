@@ -11,3 +11,32 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.logo {
+  width: 100px;
+  height: 92px;
+  padding-left: 80px;
+}
+
+.button{
+  width: 100px;
+  height: 60x;
+  padding: 10px ;
+  color:  solid rgb(232, 87, 87);
+}
+
+.submit{
+  width: 100px;
+  height: 60x;
+  padding: 10px ;
+  background-color: solid rgb(232, 87, 87);
+}
+
+#board{
+  background: solid white;
+  width: 150vmin;
+  height: 80vmin;
+  border: 2px solid white;
+  display: flex;
+}
+
