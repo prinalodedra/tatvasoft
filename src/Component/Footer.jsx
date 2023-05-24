@@ -1,11 +1,16 @@
 import React from 'react';
+import { addIcon } from '../Assets/images';
 
-function Footer() {
+
+function Footer () {
     return (
-        <>
-            <h6>Footer is Working</h6>
-        </>
-    )
+        <div align="center">
+                    <img src= {addIcon} id='footer'/>
+        </div>
+
+)
+
 }
+
 
 export default Footer;

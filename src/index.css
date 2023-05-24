@@ -22,14 +22,22 @@ code {
   width: 100px;
   height: 60x;
   padding: 10px ;
-  color:  solid rgb(232, 87, 87);
 }
 
 .submit{
   width: 100px;
   height: 60x;
   padding: 10px ;
-  background-color: solid rgb(232, 87, 87);
+}
+
+#footer{
+  width: 110px;
+  height: 100px;
+
+}
+
+#note{
+  color: rgb(113, 106, 106);
 }
 
 #board{

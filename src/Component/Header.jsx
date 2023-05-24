@@ -10,12 +10,10 @@ const Header = (props) => {
             <a>
             <img src= {addIcon} className='logo'/>
             </a>
-            
             </NAVMENU>
-
             <a>
             <Button variant="contained" className='button'>cart</Button>
-            </a>``
+            </a>
 
         </NAV>
 
