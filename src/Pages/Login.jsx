@@ -1,4 +1,4 @@
-import React from "react";
+/*import React from "react";
 import { Button  } from "@mui/material";
 import Header from "../Component/Header";
 import Footer from "../Component/Footer";
@@ -97,6 +97,26 @@ function Login() {
             <Footer />
         </>
     )
+}
+
+export default Login;*/
+
+import React from "react";
+import { Link } from "react-router-dom";
+import Footer from "../Component/Footer";
+import Header from "../Component/Header";
+
+
+function Login(){
+    return(
+        <>
+            <Header />
+            <h1>Login Component</h1><br />
+            <Link to="/Register">Register</Link><br />
+            <Link to='/ProductList'>ProductList</Link>
+            <Footer />
+        </>
+    );
 }
 
 export default Login;

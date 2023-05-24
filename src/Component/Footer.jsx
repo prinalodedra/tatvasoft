@@ -1,14 +1,16 @@
 import React from 'react';
-import { addIcon } from '../Assets/images';
+import  tatvfoft  from '../Assets/images/logo.png';
 
 
 function Footer () {
     return (
-        <div align="center">
-                    <img src= {addIcon} id='footer'/>
+        <div style={{backgroundColor:"whitesmoke",marginTop:50,height:200,justifyContent:"center"}}>
+        <div align="center" >
+                    <img src= {tatvfoft} id='footer'/>
+        </div>
         </div>
 
-)
+);
 
 }
 
