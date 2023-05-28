@@ -48,12 +48,48 @@
   }
   
 
-  #board{
+ #board{
     background: white;
     width: 150vmin;
-    height: 100vmin;
+    height: 110vmin;
     border: 2px solid white;
     display: grid;
     padding-left: 50px;
     
 }
+
+#board2{
+  background: solid white;
+  width: 175vmin;
+  height: 100vmin;
+  border: 2px solid white;
+  display: grid;
+  padding-left: 50px;
+  align-items: center;
+  padding-top: 30px;
+  grid-template-rows: repeat(3,1fr);
+  grid-template-columns: repeat(3,1fr);
+}
+
+
+#board3{
+  background: solid white;
+  width: 70vmin;
+  height: 80min;
+  border: 2px solid white;
+  display: grid;
+  padding-left: 50px;
+  align-items: left;
+}
+
+
+#board4{
+  background: solid white;
+  width: 70vmin;
+  height: 60vmin;
+  border: 2px solid white;
+  display: grid;
+  padding-left: 50px;
+  align-items:left;
+}
+

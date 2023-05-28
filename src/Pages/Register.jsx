@@ -1,13 +1,18 @@
 import React from 'react';
 import Header from '../Component/Header';
-
+import userServices from '../service/user.service';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import '../style/Register.css';
+import axios from "axios"; 
 
-import {  Button,Grid,TextField,Breadcrumbs,Link,Typography } from '@mui/material';
+import {  Button,Grid,TextField,Breadcrumbs,Link,Typography, FormControl, InputLabel, Select,  MenuItem } from '@mui/material';
+
 import Footer from '../Component/Footer';
-
+import { toast } from 'react-toastify';
+import authService from '../service/auth.service';
+import { Navigate, useNavigate } from 'react-router-dom';
+const { useState, useEffect } = require("react");
 
 const validationSchema = yup.object({
   email: yup
@@ -20,16 +25,25 @@ const validationSchema = yup.object({
     .required('Password is required'),
     confirmpassword:yup.string().oneOf([yup.ref("password"),null],"Password and Confirm Password must be match.")
   .required("Confirm Password is required"),
-    firstname:yup.string().required("First name is required"),
-  lastname:yup.string('Enter your lastNmae').required("last name is required"),
+    firstName:yup.string().required("First name is required"),
+  lastName:yup.string('Enter your lastNmae').required("last name is required"),
+  roleId:yup.number().required("please select the role"),
 });
 
+
 const Register = () => {
-  
+  // const [roleList,setRoleList]=useState("");
+  const navigate=useNavigate();
+// const getRoles=()=>{
+//   userServices.getAllRoles().then((res)=>{
+//     setRoleList(res);
+//   });
+// };
+
   const formik = useFormik({
     initialValues: {
-      firstname:"",
-      lastname:"",
+      firstName:"",
+      lastName:"",
       email: '',
       password: '',
       
@@ -38,9 +52,12 @@ const Register = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      
-     alert(JSON.stringify(values, null, 2));
-     
+      console.log(values)
+      delete values.confirmpassword;
+      authService.create(values).then((res)=>{
+        navigate("/login");
+        toast.success("sucessfully registered");
+      });
     },
   });
 
@@ -67,125 +84,147 @@ const Register = () => {
             background: 'red',
             color: 'red',
             borderColor: 'red',
-            height: '0.5px',
+            height: '4px',
             marginInline: "30px",
             width:'200px',
             
           }} />
           </center>
         <br />
-        <center>
 
-        <div id="board">
+        <div align= "center">
 
-            <h3 align="left" style={{ paddingLeft: 50, marginTop: 30 }}>Personal Information</h3>
-            <hr
-              style={{
-                background: 'whitesmoke',
-                color: 'whitesmoke',
-                borderColor: 'whitesmoke',
-                height: '0.2px',
-                marginInline: "30px"
-              }} />
-            <h4 align ="left">Please enter the follwing information to create your Account</h4>
-            <div align ="left">
-            <Grid direction="column" paddingLeft={0}>
-              <Grid direction="row">
-                <TextField style={{
-                  height: 50, width: 350, marginInline: 30, marginTop: 20
-                }}
-                  fullWidth
-                  id="firstname"
-                  name="firstname"
-                  label="FirstName *"
-                  value={formik.values.firstname}
-                  onChange={formik.handleChange}
-                  error={formik.touched.firstname && Boolean(formik.errors.firstname)}
-                  helperText={formik.touched.firstname && formik.errors.firstname} />
+        <div id= "board" >
 
-                <TextField style={{
-                  height: 50, width: 350, marginInline: 30, marginTop: 20
-                }}
-                  fullWidth
-                  id="lastname"
-                  name="lastname"
-                  label="LastName *"
-                  value={formik.values.lastname}
-                  onChange={formik.handleChange}
-                  error={formik.touched.lastname && Boolean(formik.errors.lastname)}
-                  helperText={formik.touched.lastname && formik.errors.lastname} />
-              </Grid>
-              <Grid direction="row">
-                <TextField style={{
-                  height: 50, width: 400, marginInline: 30, marginBlockStart: 30,
-                }}
-                  fullWidth
-                  id="email"
-                  name="email"
-                  label="Email Address *"
-                  value={formik.values.email}
-                  onChange={formik.handleChange}
-                  error={formik.touched.email && Boolean(formik.errors.email)}
-                  helperText={formik.touched.email && formik.errors.email} />
-              </Grid>
+          <h3 align="left" style={{ paddingLeft: 50, marginTop: 30 }}>Personal Information</h3>
+          <hr
+            style={{
+              background: 'gray',
+              color: 'gray',
+              borderColor: 'whitesmoke',
+              height: '3px',
+              marginInline: "30px"
+            }} />
+          <h4  align ="left" style={{fontSize:18, paddingLeft: 10}}>Please enter the follwing information to create your Account</h4>
+          <Grid direction="column"style={{justifyContent:"left"}}>
+            <Grid direction="row">
+              <TextField style={{
+                height: 50, width: 600, marginInline: 30, marginTop: 20, 
+              }}
+                fullWidth
+                id="firstName"
+                name="firstName"
+                label="FirstName *"
+                value={formik.values.firstName}
+                onChange={formik.handleChange}
+                error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+                helperText={formik.touched.firstName && formik.errors.firstName} />
+              <TextField style={{
+                height: 50, width: 600, marginInline: 30, marginTop: 20
+              }}
+                fullWidth
+                id="lastName"
+                name="lastName"
+                label="LastName *"
+                value={formik.values.lastName}
+                onChange={formik.handleChange}
+                error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+                helperText={formik.touched.lastName && formik.errors.lastName} />
             </Grid>
-            <h3 align="left" style={{ paddingLeft: 50 }}>Login Information</h3>
-            <hr
-              style={{
-                background: 'whitesmoke',
-                color: 'whitesmoke',
-                borderColor: 'whitesmoke',
-                height: '0.2px',
-                marginInline: "30px"
-              }} />
-              <div align ="left">
-                    <Grid direction="row" paddingLeft={30}>
-                    <TextField style={{
-                      height: 50, width: 600, marginInline: 30, marginTop: 20, marginLeft: 0,
-                    }}
-                      fullWidth
-                      id="password"
-                      name="password"
-                      label="Password *"
-                      
-                      type="password"
-                      value={formik.values.password}
-                      onChange={formik.handleChange}
-                      error={formik.touched.password && Boolean(formik.errors.password)}
-                      helperText={formik.touched.password && formik.errors.password} />
-
-                    <TextField style={{
-                      height: 50, width: 600, marginInline: 30, marginTop: 20, marginLeft: 0,
-                    }}
-                      fullWidth
-                      id="confirmpassword"
-                      name="confirmpassword"
-                      label="Confirm Password *"
-                      type="password"
-                      value={formik.values.confirmpassword}
-                      onChange={formik.handleChange}
-                      error={formik.touched.confirmpassword && Boolean(formik.errors.confirmpassword)}
-                      helperText={formik.touched.confirmpassword && formik.errors.confirmpassword} />
-                  </Grid>
-
-              </div>
-            <div align="left" className='butdiv'>
-              <Button color="primary" variant="contained" fullWidth type="submit" style={{ marginInlineStart: 270, backgroundColor: '#f14d53',color:'white' }}>
+            <Grid direction="row">
+              <TextField style={{
+                height: 50, width: 600, marginInline: 30, marginBlockStart: 30
+              }}
+                fullWidth
+                id="email"
+                name="email"
+                label="Email Address *"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email} />
               
-                Submit
-              </Button>
+                  
+                  <Select
+                  style={{height: 50, width: 600, marginInline: 30, marginBlockStart: 30}}
+                    value={formik.values.roleId}
+                    onChange={formik.handleChange}
+                    label="Role"
+                    // onBlur={handleBlur}
+                    name="roleId"
+                    size="small"
+                    error={formik.touched.roleId && Boolean(formik.errors.roleId)}
+                helperText={formik.touched.roleId && formik.errors.roleId} 
+                    fullWidth
+                  displayEmpty
+                  >
+                    <MenuItem value="2"  defaultChecked>Buyer</MenuItem>
+                    <MenuItem value="3" >Seller</MenuItem>
+                  </Select>
+                
+                  
+                
+            </Grid>
+          </Grid>
+          <br />
+          <br />
+          <h3 align="left" style={{ paddingLeft: 50 }}>Login Information</h3>
+          <hr
+            style={{
+              background: 'gray',
+              color: 'gray',
+              borderColor: 'whitesmoke',
+              height: '3px',
+              marginInline: "30px"
+            }} />
+          <Grid direction="row" >
+            <TextField style={{
+              height: 50, width: 600, marginInline: 30, marginTop: 20
+            }}
+              fullWidth
+              id="password"
+              name="password"
+              label="Password *"
+              
+              type="password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password} />
 
-            </div>
+            <TextField style={{
+              height: 50, width: 600, marginInline: 30, marginTop: 20
+            }}
+              fullWidth
+              id="confirmpassword"
+              name="confirmpassword"
+              label="Confirm Password *"
+              type="password"
+              value={formik.values.confirmpassword}
+              onChange={formik.handleChange}
+              error={formik.touched.confirmpassword && Boolean(formik.errors.confirmpassword)}
+              helperText={formik.touched.confirmpassword && formik.errors.confirmpassword} />
+          </Grid>
+          <div align="left" className='butdiv'>
+            <Button color="primary" variant="contained" fullWidth type="submit" style={{ marginInlineStart: 270, backgroundColor: '#f14d53',color:'white' }}>
+            
+              Submit
+            </Button>
+          </div>
 
-            </div>    
-            </div>
 
-        </center>
-      
+          </div>
+
+
+        </div>
+
+        
+
+        
+
       </form>
       <Footer />
     </div>
   );
 };
 export default Register;
-
